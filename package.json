@@ -1,0 +1,24 @@
+{
+  "name": "fullstack-backend",
+  "version": "1.0.0",
+  "description": "backend para nuestros citas de reservas de citas",
+  "main": "app.js",
+  "scripts": {
+    "sumas": "node src/sumas.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "backend"
+  ],
+  "author": "Jorge Morales",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1"
+  }
+}
