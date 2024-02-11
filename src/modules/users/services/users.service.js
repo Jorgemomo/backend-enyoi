@@ -24,3 +24,16 @@ exports.getById = (req, res) => {
     }
   });
 };
+
+exports.createUser = (req, res) => {
+  const { full_name, phone, address, email, password, rol } = req.body; // capturamos el parametro id de la ruta
+  const sql = `INSERT INTO users (full_name, phone, address, email, password, rol) VALUES ('${full_name}', '${phone}', '${address}', '${email}', '${password}', '${rol}')`; // consulta SQL
+  conexion.query(sql, (error, rows) => {
+    // se realiza consulta  a base de datos
+    if (error) {
+      res.json(error);
+    } else {
+      res.json(rows); // enviamos los resultados en formato JSON
+    }
+  });
+};

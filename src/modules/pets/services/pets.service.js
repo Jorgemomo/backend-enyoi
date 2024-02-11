@@ -24,3 +24,16 @@ exports.getById = (req, res) => {
     }
   });
 };
+
+exports.createPet = (req, res) => {
+  const { name, type, race, age, weight, id_user } = req.body; // capturamos el parametro id de la ruta
+  const sql = `INSERT INTO pets (name, type, race, age, weight, id_user) VALUES ('${name}', '${type}', '${race}', '${age}', '${weight}', '${id_user}')`; // consulta SQL
+  conexion.query(sql, (error, rows) => {
+    // se realiza consulta  a base de datos
+    if (error) {
+      res.json(error);
+    } else {
+      res.json(rows); // enviamos los resultados en formato JSON
+    }
+  });
+};
