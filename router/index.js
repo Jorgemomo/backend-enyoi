@@ -1,2 +1,15 @@
 const express = require("express"); // se llama  al modulo de express
-const conexion = require("../config/conexion"); // Importar conexiones
+const users = require("../src/modules/users/routes/users.router");
+const pets = require("../src/modules/pets/routes/pets.router");
+
+const routers = (app) => {
+  const baseRoute = express.Router(); // creamos otro router base
+  app.use(express.static("public")); // creamos una ruta pública estática
+  app.use("/api/v1", baseRoute); //  agregamos la ruta a nuestra aplicación principal
+
+  baseRoute.use("/users", users); // prefijo para las rutas que van a estar dentro del recurso "usuarios"
+
+  baseRoute.use("/pets", pets); // prefijo para las rutas que van a estar dentro del recurso "mascotas"
+};
+
+module.exports = routers;

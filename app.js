@@ -1,33 +1,11 @@
 const express = require("express"); // se llama  al modulo de express
-const conexion = require("./config/conexion"); // Importar conexiones
+const routers = require("./router/index"); // importamos los rutas
 
 const app = express(); //se instancia  el servidor con la clase Express
 const port = 3000;
 app.set("port", port); //setear puerto
 
-app.get("/pets", (req, res) => {
-  const sql = "SELECT * FROM pets"; // consulta SQL
-  conexion.query(sql, (error, rows) => {
-    // se realiza consulta  a base de datos
-    if (error) {
-      res(error);
-    } else {
-      res.json(rows); // enviamos los resultados en formato JSON
-    }
-  });
-});
-
-app.get("/users", (req, res) => {
-  const sql = "SELECT * FROM pets"; // consulta SQL
-  conexion.query(sql, (error, rows) => {
-    // se realiza consulta  a base de datos
-    if (error) {
-      res(error);
-    } else {
-      res.json(rows); // enviamos los resultados en formato JSON
-    }
-  });
-});
+routers(app);
 
 app.listen(app.get("port"), (error) => {
   // escucha el puerto
