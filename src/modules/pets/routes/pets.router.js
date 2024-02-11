@@ -1,17 +1,9 @@
 const express = require("express"); // se llama  al modulo de express
-const conexion = require("../../../../config/conexion"); // Importar conexiones
+const { getAllPets, getById } = require("../services/pets.service");
+
 const router = express.Router(); //  creamos el router base
 
-router.get("/", (req, res) => {
-  const sql = "SELECT * FROM pets"; // consulta SQL
-  conexion.query(sql, (error, rows) => {
-    // se realiza consulta  a base de datos
-    if (error) {
-      res(error);
-    } else {
-      res.json(rows); // enviamos los resultados en formato JSON
-    }
-  });
-});
+router.get("/", getAllPets);
+router.get("/byId/:id", getById);
 
 module.exports = router;
