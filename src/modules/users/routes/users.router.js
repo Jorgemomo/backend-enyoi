@@ -4,11 +4,15 @@ const {
   getAllUsers,
   getById,
   createUser,
+  updateUser,
+  deleteUser,
 } = require("../services/users.service");
 const router = express.Router(); //  creamos el router base
 
 router.get("/", getAllUsers);
 router.get("/byId/:id", getById);
 router.post("/create", createUser);
+router.put("/update", updateUser);
+router.delete("/delete/:id", deleteUser);
 
 module.exports = router;
