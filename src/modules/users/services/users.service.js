@@ -1,5 +1,7 @@
 const conexion = require("../../../../config/conexion");
 
+const bcrypt = require("bcrypt");
+
 exports.getAllUsers = (req, res) => {
   const sql = "SELECT * FROM users"; // consulta SQL
   conexion.query(sql, (error, rows) => {
@@ -25,9 +27,13 @@ exports.getById = (req, res) => {
   });
 };
 
-exports.createUser = (req, res) => {
+exports.createUser = async (req, res) => {
   const { full_name, phone, address, email, password, rol } = req.body; // capturamos el parametro id de la ruta
-  const sql = `INSERT INTO users (full_name, phone, address, email, password, rol) VALUES ('${full_name}', '${phone}', '${address}', '${email}', '${password}', '${rol}')`; // consulta SQL
+
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  const sql = `INSERT INTO users (full_name, phone, address, email, password, rol) VALUES ('${full_name}', '${phone}', '${address}', '${email}', '${passwordHash}', '${rol}')`; // consulta SQL
+
   conexion.query(sql, (error, rows) => {
     // se realiza consulta  a base de datos
     if (error) {
