@@ -6,6 +6,7 @@ const {
   createUser,
   updateUser,
   deleteUser,
+  authUser,
 } = require("../services/users.service");
 const router = express.Router(); //  creamos el router base
 
@@ -14,5 +15,7 @@ router.get("/byId/:id", getById);
 router.post("/create", createUser);
 router.put("/update", updateUser);
 router.delete("/delete/:id", deleteUser);
+
+router.post("/auth", authUser); //ruta autenticación
 
 module.exports = router;

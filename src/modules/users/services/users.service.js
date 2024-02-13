@@ -7,7 +7,7 @@ exports.getAllUsers = (req, res) => {
   conexion.query(sql, (error, rows) => {
     // se realiza consulta  a base de datos
     if (error) {
-      res(error);
+      res.json(error);
     } else {
       res.json(rows); // enviamos los resultados en formato JSON
     }
@@ -20,7 +20,7 @@ exports.getById = (req, res) => {
   conexion.query(sql, (error, rows) => {
     // se realiza consulta  a base de datos
     if (error) {
-      res(error);
+      res.json(error);
     } else {
       res.json(rows); // enviamos los resultados en formato JSON
     }
@@ -66,6 +66,24 @@ exports.deleteUser = (req, res) => {
       res.json(error);
     } else {
       res.json(rows); // enviamos los resultados en formato JSON
+    }
+  });
+};
+
+exports.authUser = async (req, res) => {
+  const { email, password } = req.body;
+
+  const sql = `SELECT * FROM users WHERE email = '${email}'`; // consulta SQL
+  conexion.query(sql, (error, rows) => {
+    // se realiza consulta  a base de datos
+    if (error) {
+      res.json(error);
+    } else {
+      if (rows.length) {
+        res.json(rows); // enviamos los resultados en formato JSON
+      } else {
+        res.json("EL usuario no existe");
+      }
     }
   });
 };

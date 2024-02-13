@@ -5,7 +5,7 @@ exports.getAllPets = (req, res) => {
   conexion.query(sql, (error, rows) => {
     // se realiza consulta  a base de datos
     if (error) {
-      res(error);
+      res.json(error);
     } else {
       res.json(rows); // enviamos los resultados en formato JSON
     }
@@ -18,7 +18,7 @@ exports.getById = (req, res) => {
   conexion.query(sql, (error, rows) => {
     // se realiza consulta  a base de datos
     if (error) {
-      res(error);
+      res.json(error);
     } else {
       res.json(rows); // enviamos los resultados en formato JSON
     }
