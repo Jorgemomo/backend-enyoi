@@ -71,16 +71,25 @@ exports.deleteUser = (req, res) => {
 };
 
 exports.authUser = async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password: inPassword } = req.body;
 
   const sql = `SELECT * FROM users WHERE email = '${email}'`; // consulta SQL
-  conexion.query(sql, (error, rows) => {
+  conexion.query(sql, async (error, rows) => {
     // se realiza consulta  a base de datos
     if (error) {
       res.json(error);
     } else {
       if (rows.length) {
-        res.json(rows); // enviamos los resultados en formato JSON
+        const { password } = rows[0];
+        const passwordIsCorrect = await bcrypt.compare(inPassword, password);
+        if (passwordIsCorrect) {
+          res.json({
+            ...rows[0],
+            token: "lalala",
+          }); // enviamos los resultados en formato JSON
+        } else {
+          res.json("El password  es incorrecto");
+        }
       } else {
         res.json("EL usuario no existe");
       }
