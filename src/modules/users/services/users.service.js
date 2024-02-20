@@ -1,6 +1,7 @@
 const conexion = require("../../../../config/conexion");
-
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const passport = require("passport");
 
 exports.getAllUsers = (req, res) => {
   const sql = "SELECT * FROM users"; // consulta SQL
@@ -72,6 +73,7 @@ exports.deleteUser = (req, res) => {
 
 exports.authUser = async (req, res) => {
   const { email, password: inPassword } = req.body;
+  const credentials = { email: email, password: inPassword };
 
   const sql = `SELECT * FROM users WHERE email = '${email}'`; // consulta SQL
   conexion.query(sql, async (error, rows) => {
@@ -82,10 +84,12 @@ exports.authUser = async (req, res) => {
       if (rows.length) {
         const { password } = rows[0];
         const passwordIsCorrect = await bcrypt.compare(inPassword, password);
+        const token = jwt.sign(credentials, "veterinariaPetsLalala");
         if (passwordIsCorrect) {
           res.json({
-            ...rows[0],
-            token: "lalala",
+            name: rows[0].full_name,
+            email: rows[0].email,
+            token: token,
           }); // enviamos los resultados en formato JSON
         } else {
           res.json("El password  es incorrecto");
