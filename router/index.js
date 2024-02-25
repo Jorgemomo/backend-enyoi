@@ -1,6 +1,8 @@
 const express = require("express"); // se llama  al modulo de express
+const usersAuth = require("../src/modules/users/routes/userAuth.router");
 const users = require("../src/modules/users/routes/users.router");
 const pets = require("../src/modules/pets/routes/pets.router");
+const quotes = require("../src/modules/quotes/routes/quotes.router");
 
 const passport = require("passport");
 require("../utils/auth/index");
@@ -10,13 +12,26 @@ const routers = (app) => {
   app.use(express.static("public")); // creamos una ruta pública estática
   app.use("/api/v1", baseRoute); //  agregamos la ruta a nuestra aplicación principal
 
+  baseRoute.use("/userslog", usersAuth);
+
+  // baseRoute.use("/users", users); //sin la autenticación del token
   baseRoute.use(
     "/users",
     passport.authenticate("jwt", { session: false }),
     users
   ); // prefijo para las rutas que van a estar dentro del recurso "usuarios"
 
-  baseRoute.use("/pets", pets); // prefijo para las rutas que van a estar dentro del recurso "mascotas"
+  baseRoute.use(
+    "/pets",
+    passport.authenticate("jwt", { session: false }),
+    pets
+  ); // prefijo para las rutas que van a estar dentro del recurso "mascotas"
+
+  baseRoute.use(
+    "/quotes",
+    passport.authenticate("jwt", { session: false }),
+    quotes
+  ); // prefijo para las rutas que van a estar dentro del recurso "citas
 };
 
 module.exports = routers;
