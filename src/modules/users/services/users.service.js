@@ -3,6 +3,8 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const passport = require("passport");
 
+require("dotenv").config();
+
 exports.getAllUsers = (req, res) => {
   const sql = "SELECT * FROM users"; // consulta SQL
   conexion.query(sql, (error, rows) => {
@@ -74,6 +76,7 @@ exports.deleteUser = (req, res) => {
 exports.authUser = async (req, res) => {
   const { email, password: inPassword } = req.body;
   const credentials = { email: email, password: inPassword };
+  const secret = process.env.SECRET_KEY;
 
   const sql = `SELECT * FROM users WHERE email = '${email}'`; // consulta SQL
   conexion.query(sql, async (error, rows) => {
@@ -84,7 +87,7 @@ exports.authUser = async (req, res) => {
       if (rows.length) {
         const { password } = rows[0];
         const passwordIsCorrect = await bcrypt.compare(inPassword, password);
-        const token = jwt.sign(credentials, "veterinariaPetsLalala");
+        const token = jwt.sign(credentials, secret);
         if (passwordIsCorrect) {
           res.json({
             name: rows[0].full_name,
