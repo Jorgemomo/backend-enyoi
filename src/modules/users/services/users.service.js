@@ -42,7 +42,7 @@ exports.createUser = async (req, res) => {
     if (error) {
       res.json(error);
     } else {
-      res.json(rows); // enviamos los resultados en formato JSON
+      res.json({ status: 200, message: "User created sucessfully" }); // enviamos los resultados en formato JSON
     }
   });
 };
