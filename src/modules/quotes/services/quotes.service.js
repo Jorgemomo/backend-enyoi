@@ -1,10 +1,9 @@
 const conexion = require("../../../../config/conexion");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const passport = require("passport");
 
-exports.getAllUsers = (req, res) => {
-  const sql = "SELECT * FROM users"; // consulta SQL
+exports.getAllQuotes = (req, res) => {
+  const sql = "SELECT * FROM quote"; // consulta SQL
   conexion.query(sql, (error, rows) => {
     // se realiza consulta  a base de datos
     if (error) {
@@ -17,7 +16,7 @@ exports.getAllUsers = (req, res) => {
 
 exports.getById = (req, res) => {
   const { id } = req.params; // capturamos el parametro id de la ruta
-  const sql = `SELECT * FROM users WHERE id=${id}`; // consulta SQL
+  const sql = `SELECT * FROM quote WHERE id=${id}`; // consulta SQL
   conexion.query(sql, (error, rows) => {
     // se realiza consulta  a base de datos
     if (error) {
@@ -28,12 +27,12 @@ exports.getById = (req, res) => {
   });
 };
 
-exports.createUser = async (req, res) => {
-  const { full_name, phone, address, email, password, rol } = req.body; // capturamos el parametro id de la ruta
+exports.createQuote = async (req, res) => {
+  const { date, hour, doctor, id_pet } = req.body; // capturamos el parametro id de la ruta
 
-  const passwordHash = await bcrypt.hash(password, 10);
+  // const passwordHash = await bcrypt.hash(password, 10);
 
-  const sql = `INSERT INTO users (full_name, phone, address, email, password, rol) VALUES ('${full_name}', '${phone}', '${address}', '${email}', '${passwordHash}', '${rol}')`; // consulta SQL
+  const sql = `INSERT INTO quote (date, hour, doctor, id_pet) VALUES ('${date}', '${hour}', '${doctor}', '${id_pet}')`; // consulta SQL
 
   conexion.query(sql, (error, rows) => {
     // se realiza consulta  a base de datos
@@ -45,7 +44,7 @@ exports.createUser = async (req, res) => {
   });
 };
 
-exports.updateUser = (req, res) => {
+exports.updateQuote = (req, res) => {
   const { id, full_name, phone, address, email, password, rol } = req.body; // capturamos el parametro id de la ruta
   const sql = `UPDATE users SET full_name = '${full_name}', phone = '${phone}', address = '${address}', email = '${email}', password = '${password}', rol = '${rol}' WHERE id = '${id}' `; // consulta SQL
   conexion.query(sql, (error, rows) => {
@@ -58,7 +57,7 @@ exports.updateUser = (req, res) => {
   });
 };
 
-exports.deleteUser = (req, res) => {
+exports.deleteQuote = (req, res) => {
   const { id } = req.params; // capturamos el parametro id de la ruta
   const sql = `DELETE FROM users WHERE id = '${id}' `; // consulta SQL
   conexion.query(sql, (error, rows) => {

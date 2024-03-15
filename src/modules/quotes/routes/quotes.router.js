@@ -1,20 +1,20 @@
 const express = require("express"); // se llama  al modulo de express
 // Importar conexiones
 const {
-  getAllUsers,
+  getAllQuotes,
   getById,
-  createUser,
-  updateUser,
-  deleteUser,
+  createQuote,
+  updateQuote,
+  deleteQuote,
   authUser,
 } = require("../services/quotes.service");
 const router = express.Router(); //  creamos el router base
 
-router.get("/", getAllUsers);
+router.get("/", getAllQuotes);
 router.get("/byId/:id", getById);
-router.post("/create", createUser);
-router.put("/update", updateUser);
-router.delete("/delete/:id", deleteUser);
+router.post("/create", createQuote);
+router.put("/update", updateQuote);
+router.delete("/delete/:id", deleteQuote);
 
 router.post("/auth", authUser); //ruta autenticación
 
