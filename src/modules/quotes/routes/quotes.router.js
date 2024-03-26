@@ -6,16 +6,16 @@ const {
   createQuote,
   updateQuote,
   deleteQuote,
-  authUser,
+  // authUser,
 } = require("../services/quotes.service");
 const router = express.Router(); //  creamos el router base
 
 router.get("/", getAllQuotes);
 router.get("/byId/:id", getById);
 router.post("/create", createQuote);
-router.put("/update", updateQuote);
+router.put("/update/:id", updateQuote);
 router.delete("/delete/:id", deleteQuote);
 
-router.post("/auth", authUser); //ruta autenticación
+// router.post("/auth", authUser); //ruta autenticación
 
 module.exports = router;
