@@ -3,7 +3,9 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 exports.getAllQuotes = (req, res) => {
-  const sql = "SELECT * FROM quote"; // consulta SQL
+  // const sql = "SELECT * FROM quote INNER JOIN pets ON quote.id = pets.id"; // consulta SQL
+  const sql = "SELECT * FROM quote INNER JOIN pets";
+
   conexion.query(sql, (error, rows) => {
     // se realiza consulta  a base de datos
     if (error) {
