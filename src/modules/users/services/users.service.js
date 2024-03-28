@@ -68,7 +68,7 @@ exports.deleteUser = (req, res) => {
     if (error) {
       res.json(error);
     } else {
-      res.json(rows); // enviamos los resultados en formato JSON
+      res.json("User deleted successfully"); // enviamos los resultados en formato JSON
     }
   });
 };
