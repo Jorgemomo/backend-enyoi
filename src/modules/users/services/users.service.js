@@ -55,7 +55,7 @@ exports.updateUser = (req, res) => {
     if (error) {
       res.json(error);
     } else {
-      res.json(rows); // enviamos los resultados en formato JSON
+      res.json("User updated successfully"); // enviamos los resultados en formato JSON
     }
   });
 };
